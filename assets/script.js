@@ -21,4 +21,21 @@ async function geoWeatherData(lat, lon) {
 
 }
 
+// generates cards for dashboard
+function generateCard (day, temp, icon, wind, humidity) {
+    return `<div class="custom-card">
+    <div class="custom-card-header">
+        <h1 class="card-title">Weekday</h1>
+    </div>
+    <div class="custom-card-body">
+        <h2 class="card-text">Temp</h2>
+        <h3 class="card-text">🌤</h3>
+        <h4 class="card-text">Wind</h4>
+        <h5 class="card-text">Humidity</h5>
+    </div>
+</div>`
+
+}
+
 handleWeatherData()
+const card = generateCard()
