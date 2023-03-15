@@ -1,6 +1,17 @@
 const apiKey = "f2ad61c9f71718bba094dc8b0baab3d9"
 let cityName = "Sacramento"
 const citySearchURL = `https://api.openweathermap.org/data/2.5/forecast?q=${cityName}&appid=${apiKey}&units=imperial`
+const cardsHTMLArray = []
+
+async function sauron() {
+    const {lat, lon} = await handleWeatherData()
+    const cityData = await geoWeatherData(lat, lon)
+    const {day, date, temperature, icon, wind, humidity} = handleVariables(cityData.list[0])
+    const currentDayHTML = generateCard(day, date, temperature, icon, wind, humidity)
+    cardsHTMLArray.push(currentDayHTML)
+    forcastCards(cityData.list)
+    setCardContainer(cardsHTMLArray)
+}
 
 // first API call to search by city name
 async function handleWeatherData() {
@@ -8,7 +19,7 @@ async function handleWeatherData() {
     const initialCityData = await response.json()
     const lat = initialCityData.city.coord.lat
     const lon = initialCityData.city.coord.lon
-    geoWeatherData(lat, lon)
+    return {lat, lon}
 }
 
 // second API call
@@ -16,16 +27,16 @@ async function geoWeatherData(lat, lon) {
     const coordSearchURL = `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${apiKey}&units=imperial`
     const response = await fetch(coordSearchURL)
     const coordCityData = await response.json()
-    manipulateData(coordCityData)
+    return coordCityData
 }
 
-// function to use the API data
-function manipulateData(finalCityData){
-    const cityDataArray = finalCityData.list
-    console.log(cityDataArray)
-    const {day, temperature, icon, wind, humidity} = handleVariables(cityDataArray[0])
-    const currentCard = generateCard(day, temperature, icon, wind, humidity)
-    return currentCard
+// Generate forcast cards
+function forcastCards(cityList) {
+    for (let i = 1; i < 40; i += 8) {
+        const {day, date, temperature, icon, wind, humidity} = handleVariables(cityList[i])    
+        const currentDayHTML = generateCard(day, date, temperature, icon, wind, humidity)
+        cardsHTMLArray.push(currentDayHTML)
+    }
 }
 
 // Creates a data object
@@ -37,7 +48,7 @@ function handleVariables(cityDataObj) {
     const {icon} = cityDataObj.weather[0]
     const iconURL = `https://openweathermap.org/img/wn/${icon}@2x.png`
     const windSpeed = cityDataObj.wind.speed
-    const currentWeatherObj = {
+    const indexWeatherObj = {
         day: weekday,
         date: dtFormat,
         temperature: temp,
@@ -45,13 +56,11 @@ function handleVariables(cityDataObj) {
         wind: windSpeed,
         humidity: humidity,
     }
-    return currentWeatherObj
+    return indexWeatherObj
 }
-
 
 // generates cards for dashboard
 function generateCard (day, date, temp, iconURL, windSpeed, humidity) {
-
     return ` 
         <div class="custom-card">
             <div class="custom-card-header">
@@ -62,17 +71,16 @@ function generateCard (day, date, temp, iconURL, windSpeed, humidity) {
                 <h2 class="card-text">${temp} ℉</h2>
                 <h3 class="card-text weather-icon"><img src="${iconURL}" /></h3>
                 <h4 class="card-text">${windSpeed} MPH</h4>
-                <h5 class="card-text">${humidity}</h5>
+                <h5 class="card-text">${humidity} %</h5>
             </div>
         </div>
     `
 }
 
 // Set current card
-function setCurrentCard (cardHTML) {
+function setCardContainer (cardHTMLArray) {
 
-    document.getElementById("cardContainer").innerHTML = cardHTML
+    document.getElementById("cardContainer").innerHTML = cardHTMLArray.join("")
 }
 
-handleWeatherData()
-setCurrentCard()
+sauron()
