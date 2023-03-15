@@ -1,13 +1,29 @@
 const apiKey = "f2ad61c9f71718bba094dc8b0baab3d9"
+const searchBtnEl = document.getElementById("searchBtn")
+const cityInputEl = document.getElementById("cityInput")
 let cityName = "Sacramento"
-const citySearchURL = `https://api.openweathermap.org/data/2.5/forecast?q=${cityName}&appid=${apiKey}&units=imperial`
-const cardsHTMLArray = []
+
+let cardsHTMLArray = []
+
+// funtion for user input
+function handleSubmit (event) {
+    event.preventDefault ()
+    if (cityInputEl.value === "") {
+        return handleError ("Please input a city name.")
+    } else {
+        cityName = cityInputEl.value
+        console.log(cityName)
+        sauron()
+    }
+}
 
 async function sauron() {
+   
     const {lat, lon} = await handleWeatherData()
     const cityData = await geoWeatherData(lat, lon)
     const {day, date, temperature, icon, wind, humidity} = handleVariables(cityData.list[0])
     const currentDayHTML = generateCard(day, date, temperature, icon, wind, humidity)
+    cardsHTMLArray = []
     cardsHTMLArray.push(currentDayHTML)
     forcastCards(cityData.list)
     setCardContainer(cardsHTMLArray)
@@ -15,6 +31,7 @@ async function sauron() {
 
 // first API call to search by city name
 async function handleWeatherData() {
+    const citySearchURL = `https://api.openweathermap.org/data/2.5/forecast?q=${cityName}&appid=${apiKey}&units=imperial&`
     const response = await fetch(citySearchURL)
     const initialCityData = await response.json()
     const lat = initialCityData.city.coord.lat
@@ -43,7 +60,6 @@ function forcastCards(cityList) {
 function handleVariables(cityDataObj) {
     const weekday = dayjs(cityDataObj.dt_txt).format('dddd')
     const dtFormat = dayjs(cityDataObj.dt_txt).format('MMM. DD, YYYY')
-    console.log(dtFormat)
     const {temp, humidity} = cityDataObj.main
     const {icon} = cityDataObj.weather[0]
     const iconURL = `https://openweathermap.org/img/wn/${icon}@2x.png`
@@ -79,8 +95,13 @@ function generateCard (day, date, temp, iconURL, windSpeed, humidity) {
 
 // Set current card
 function setCardContainer (cardHTMLArray) {
-
     document.getElementById("cardContainer").innerHTML = cardHTMLArray.join("")
 }
 
-sauron()
+// Error Function
+function handleError (message) {
+    alert(message)
+}
+
+// Event Listeners
+searchBtnEl.addEventListener ("click", (e)=> handleSubmit(e))

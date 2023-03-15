@@ -14,8 +14,8 @@
         <div class="container-fluid">
           <a class="navbar-brand">Weather Forcaster</a>
           <form class="d-flex" role="search">
-            <input class="form-control me-2" type="search" placeholder="Enter City Name" aria-label="Search">
-            <button class="btn btn-outline-light" type="submit">Search</button>
+            <input id="cityInput" class="form-control me-2" type="search" placeholder="Enter City Name" aria-label="Search">
+            <button id="searchBtn" class="btn btn-outline-light" type="submit">Search</button>
           </form>
         </div>
     </nav>
@@ -25,7 +25,68 @@
             
             <div class="custom-card">
                 <div class="custom-card-header">
-                    <h1 class="card-title">Weekday</h1>
+                    <h1 class="card-title">Today</h1>
+                    <p class="card-subtext">Date</p>
+                </div>
+                <div class="custom-card-body">
+                    <h2 class="card-text">Temp</h2>
+                    <h3 class="card-text"><img src="https://openweathermap.org/img/wn/10d@2x.png" /></h3>
+                    <h4 class="card-text">Wind</h4>
+                    <h5 class="card-text">Humidity</h5>
+                </div>
+            </div>
+            <div class="custom-card">
+                <div class="custom-card-header">
+                    <h1 class="card-title">Tomorrow</h1>
+                    <p class="card-subtext">Date</p>
+                </div>
+                <div class="custom-card-body">
+                    <h2 class="card-text">Temp</h2>
+                    <h3 class="card-text"><img src="https://openweathermap.org/img/wn/10d@2x.png" /></h3>
+                    <h4 class="card-text">Wind</h4>
+                    <h5 class="card-text">Humidity</h5>
+                </div>
+            </div>
+            <div class="custom-card">
+                <div class="custom-card-header">
+                    <h1 class="card-title">The Next Day</h1>
+                    <p class="card-subtext">Date</p>
+                </div>
+                <div class="custom-card-body">
+                    <h2 class="card-text">Temp</h2>
+                    <h3 class="card-text"><img src="https://openweathermap.org/img/wn/10d@2x.png" /></h3>
+                    <h4 class="card-text">Wind</h4>
+                    <h5 class="card-text">Humidity</h5>
+                </div>
+            </div>
+            <div class="custom-card">
+                <div class="custom-card-header">
+                    <h1 class="card-title">It's All</h1>
+                    <p class="card-subtext">Date</p>
+                </div>
+                <div class="custom-card-body">
+                    <h2 class="card-text">Temp</h2>
+                    <h3 class="card-text"><img src="https://openweathermap.org/img/wn/10d@2x.png" /></h3>
+                    <h4 class="card-text">Wind</h4>
+                    <h5 class="card-text">Humidity</h5>
+                </div>
+            </div>
+            <div class="custom-card">
+                <div class="custom-card-header">
+                    <h1 class="card-title">The</h1>
+                    <p class="card-subtext">Date</p>
+                </div>
+                <div class="custom-card-body">
+                    <h2 class="card-text">Temp</h2>
+                    <h3 class="card-text"><img src="https://openweathermap.org/img/wn/10d@2x.png" /></h3>
+                    <h4 class="card-text">Wind</h4>
+                    <h5 class="card-text">Humidity</h5>
+                </div>
+            </div>
+            <div class="custom-card">
+                <div class="custom-card-header">
+                    <h1 class="card-title">Same</h1>
+                    <p class="card-subtext">Date</p>
                 </div>
                 <div class="custom-card-body">
                     <h2 class="card-text">Temp</h2>
@@ -35,61 +96,6 @@
                 </div>
             </div>
 
-            <div class="custom-card">
-                <div class="custom-card-header">
-                    <h1 class="card-title">Weekday</h1>
-                </div>
-                <div class="custom-card-body">
-                    <h2 class="card-text">Temp</h2>
-                    <h3 class="card-text">🌤</h3>
-                    <h4 class="card-text">Wind</h4>
-                    <h5 class="card-text">Humidity</h5>
-                </div>
-            </div>
-            <div class="custom-card">
-                <div class="custom-card-header">
-                    <h1 class="card-title">Weekday</h1>
-                </div>
-                <div class="custom-card-body">
-                    <h2 class="card-text">Temp</h2>
-                    <h3 class="card-text">🌤</h3>
-                    <h4 class="card-text">Wind</h4>
-                    <h5 class="card-text">Humidity</h5>
-                </div>
-            </div>
-            <div class="custom-card">
-                <div class="custom-card-header">
-                    <h1 class="card-title">Weekday</h1>
-                </div>
-                <div class="custom-card-body">
-                    <h2 class="card-text">Temp</h2>
-                    <h3 class="card-text">🌤</h3>
-                    <h4 class="card-text">Wind</h4>
-                    <h5 class="card-text">Humidity</h5>
-                </div>
-            </div>
-            <div class="custom-card">
-                <div class="custom-card-header">
-                    <h1 class="card-title">Weekday</h1>
-                </div>
-                <div class="custom-card-body">
-                    <h2 class="card-text">Temp</h2>
-                    <h3 class="card-text">🌤</h3>
-                    <h4 class="card-text">Wind</h4>
-                    <h5 class="card-text">Humidity</h5>
-                </div>
-            </div>
-            <div class="custom-card">
-                <div class="custom-card-header">
-                    <h1 class="card-title">Weekday</h1>
-                </div>
-                <div class="custom-card-body">
-                    <h2 class="card-text">Temp</h2>
-                    <h3 class="card-text">🌤</h3>
-                    <h4 class="card-text">Wind</h4>
-                    <h5 class="card-text">Humidity</h5>
-                </div>
-            </div>
         </div>
         <div id="sidebarContainer" class="custom-sidebar">
             <p>item 1</p>
