@@ -1,18 +1,36 @@
 const apiKey = "f2ad61c9f71718bba094dc8b0baab3d9"
 const searchBtnEl = document.getElementById("searchBtn")
+const sidebarContainerEl = document.getElementById("sidebarContainer")
 const cityInputEl = document.getElementById("cityInput")
-let cityName = "Sacramento"
+let cityName = ""
 
 let cardsHTMLArray = []
+let historyHTMLArray = []
+var userSearchArray = []
 
 // funtion for user input
 function handleSubmit (event) {
     event.preventDefault ()
+    userSearchArray = []
     if (cityInputEl.value === "") {
         return handleError ("Please input a city name.")
     } else {
         cityName = cityInputEl.value
-        console.log(cityName)
+        document.getElementById("searchedCity").innerText = cityName
+        const localJSON = localStorage.getItem("history")
+        if (localJSON) {
+            const cityHistory = JSON.parse(localJSON)
+            cityHistory.forEach(value => {
+                userSearchArray.push(value)
+            });
+        }
+        const userObject = {city: cityInputEl.value}
+        userSearchArray.push(userObject)
+        const stringifiedData = JSON.stringify(userSearchArray)
+        localStorage.setItem("history", stringifiedData)
+        console.log(userSearchArray)
+        generateHistoryBtns()
+        setHistory(historyHTMLArray)
         sauron()
     }
 }
@@ -103,5 +121,36 @@ function handleError (message) {
     alert(message)
 }
 
+
+
+// Generates buttons for sidebar
+function generateHistoryBtns () {
+    userSearchArray.forEach((item)=>{
+        historyHTMLArray.push(`
+        <button id="${item.city}" class="btn btn-primary" type="button">${item.city}</button>
+        `)
+    })
+}
+
+// Function to set History
+function setHistory (newSearchArray) {
+    document.getElementById("sidebarContainer").innerHTML = newSearchArray.join("")
+
+}
+
+// Initial Set History
+function initializeHistory () {
+    const searches = JSON.parse(localStorage.getItem("history"))
+    const historyBtns = searches?.map((item)=>{
+        return `
+        <button id="${item.city}" class="btn btn-primary" type="button">${item.city}</button>
+        `
+    })
+    setHistory(historyBtns)
+}
+
+initializeHistory()
+
 // Event Listeners
 searchBtnEl.addEventListener ("click", (e)=> handleSubmit(e))
+//sidebarContainerEl.addEventListener ("click", function(e) {return handleSubmit})
