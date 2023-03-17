@@ -164,7 +164,7 @@ function handleHistoryClick (e) {
 
 // Disallows number inputs: https://www.youtube.com/watch?v=EduFuZzvWP8
 function alphaOnly(input) {
-    var key = /[^a-z]/gi;
+    var key = /[^a-z ]/gi;
     input.value = input.value.replace(key, "")
   };
 
