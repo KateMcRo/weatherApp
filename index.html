@@ -14,7 +14,7 @@
         <div class="container-fluid">
           <a class="navbar-brand">Weather Forcaster</a>
           <form class="d-flex" role="search">
-            <input id="cityInput" class="form-control me-2" type="search" placeholder="Enter City Name" aria-label="Search">
+            <input id="cityInput" class="form-control me-2" type="search" placeholder="Enter City Name" onkeyup="alphaOnly(this)" aria-label="Search">
             <button id="searchBtn" class="btn btn-outline-light" type="submit">Search</button>
           </form>
         </div>

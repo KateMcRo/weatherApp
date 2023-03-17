@@ -5,6 +5,7 @@ const cityInputEl = document.getElementById("cityInput")
 const cityHeader = document.getElementById("searchedCity")
 let cityName = ""
 
+
 let cardsHTMLArray = []
 let historyHTMLArray = []
 var userSearchArray = []
@@ -105,8 +106,8 @@ function generateCard (day, date, temp, iconURL, windSpeed, humidity) {
             <div class="custom-card-body">
                 <h2 class="card-text">${temp} ℉</h2>
                 <h3 class="card-text weather-icon"><img src="${iconURL}" /></h3>
-                <h4 class="card-text">${windSpeed} MPH</h4>
-                <h5 class="card-text">${humidity} %</h5>
+                <h4 class="card-text">${windSpeed} MPH Wind</h4>
+                <h5 class="card-text">${humidity}% Humidity</h5>
             </div>
         </div>
     `
@@ -160,6 +161,12 @@ function handleHistoryClick (e) {
     cityHeader.innerText = cityName
 
 }
+
+// Disallows number inputs: https://www.youtube.com/watch?v=EduFuZzvWP8
+function alphaOnly(input) {
+    var key = /[^a-z]/gi;
+    input.value = input.value.replace(key, "")
+  };
 
 initializeHistory()
 
