@@ -2,6 +2,7 @@ const apiKey = "f2ad61c9f71718bba094dc8b0baab3d9"
 const searchBtnEl = document.getElementById("searchBtn")
 const sidebarContainerEl = document.getElementById("sidebarContainer")
 const cityInputEl = document.getElementById("cityInput")
+const cityHeader = document.getElementById("searchedCity")
 let cityName = ""
 
 let cardsHTMLArray = []
@@ -16,7 +17,7 @@ function handleSubmit (event) {
         return handleError ("Please input a city name.")
     } else {
         cityName = cityInputEl.value
-        document.getElementById("searchedCity").innerText = cityName
+        cityHeader.innerText = cityName
         const localJSON = localStorage.getItem("history")
         if (localJSON) {
             const cityHistory = JSON.parse(localJSON)
@@ -149,8 +150,19 @@ function initializeHistory () {
     setHistory(historyBtns)
 }
 
+// History clicks
+function handleHistoryClick (e) {
+    console.log("Click")
+    const userSelection = e.target.innerText
+    cityName = e.target.innerText
+    console.log(userSelection)
+    sauron()
+    cityHeader.innerText = cityName
+
+}
+
 initializeHistory()
 
 // Event Listeners
 searchBtnEl.addEventListener ("click", (e)=> handleSubmit(e))
-//sidebarContainerEl.addEventListener ("click", function(e) {return handleSubmit})
+sidebarContainerEl.addEventListener ("click", (e)=> handleHistoryClick(e))
