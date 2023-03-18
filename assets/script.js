@@ -13,11 +13,14 @@ let userSearchArray = []
 function handleSubmit (event) {
     event.preventDefault ()
     userSearchArray = []
+    // Empty inputs not accepted
     if (cityInputEl.value === "") {
         return handleError ("Please input a city name.")
     } else {
+        // Input is added to header
         cityName = cityInputEl.value
         cityHeader.innerText = cityName
+
         const localJSON = localStorage.getItem("history")
         if (localJSON) {
             const cityHistory = JSON.parse(localJSON)
@@ -27,11 +30,13 @@ function handleSubmit (event) {
         }
         const city = cityInputEl.value.toUpperCase()
         userSearchArray.push(city)
+        // Only single instance of input displayed
         const filtered = [...new Set(userSearchArray)]
         userSearchArray = filtered
+
         const stringifiedData = JSON.stringify(filtered)
         localStorage.setItem("history", stringifiedData)
-        console.log(userSearchArray)
+        // Calls functions
         generateHistoryBtns()
         setHistory(historyHTMLArray)
         sauron()
@@ -39,7 +44,6 @@ function handleSubmit (event) {
 }
 
 async function sauron() {
-   
     const {lat, lon} = await handleWeatherData()
     const cityData = await geoWeatherData(lat, lon)
     const {day, date, temperature, icon, wind, humidity} = handleVariables(cityData.list[0])
@@ -56,7 +60,6 @@ async function handleWeatherData() {
     const response = await fetch(citySearchURL)
     if (response.ok) {
         const initialCityData = await response.json()
-        console.log({initialCityData})
         const lat = initialCityData.city.coord.lat
         const lon = initialCityData.city.coord.lon
         return {lat, lon}
@@ -129,12 +132,9 @@ function handleError (message) {
     alert(message)
 }
 
-
-
 // Generates buttons for sidebar
 function generateHistoryBtns () {
     historyHTMLArray = []
-    console.log({userSearchArray})
     userSearchArray.forEach((item)=>{
         historyHTMLArray.push(`
         <button id="${item}" class="btn btn-primary" type="button">${item}</button>
@@ -144,40 +144,36 @@ function generateHistoryBtns () {
 
 // Function to set History
 function setHistory (newSearchArray) {
-    document.getElementById("sidebarContainer").innerHTML = newSearchArray?.join("") // Cannot read properties of undefined (reading 'join')
+    document.getElementById("sidebarContainer").innerHTML = newSearchArray?.join("")
 }
 
 // Initial Set History
 function initializeHistory () {
     const searches = JSON.parse(localStorage.getItem("history"))
-    console.log({searches})
     if (searches) {
     const historyBtns = searches?.map((item)=>{
         return `
         <button id="${item}" class="btn btn-primary" type="button">${item}</button>
         `
     })
-    setHistory(historyBtns) // Cannot read properties of undefined (reading 'join')
+    setHistory(historyBtns)
     }
 }
 
 // History clicks
 function handleHistoryClick (e) {
-    console.log("Click")
-    const userSelection = e.target.innerText
     cityName = e.target.innerText
-    console.log(userSelection)
     sauron()
     cityHeader.innerText = cityName
 }
 
 // Disallows number inputs: https://www.youtube.com/watch?v=EduFuZzvWP8
 function alphaOnly(input) {
-    var key = /[^a-z ]/gi;
+    var key = /[^a-z ]/gi; // Accepts only letters and space
     input.value = input.value.replace(key, "")
-  };
+}
 
-initializeHistory() // Cannot read properties of undefined (reading 'join')
+initializeHistory()
 
 // Event Listeners
 searchBtnEl.addEventListener ("click", (e)=> handleSubmit(e))
