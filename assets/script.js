@@ -25,9 +25,11 @@ function handleSubmit (event) {
                 userSearchArray.push(value)
             });
         }
-        const userObject = {city: cityInputEl.value}
-        userSearchArray.push(userObject)
-        const stringifiedData = JSON.stringify(userSearchArray)
+        const city = cityInputEl.value.toUpperCase()
+        userSearchArray.push(city)
+        const filtered = [...new Set(userSearchArray)]
+        userSearchArray = filtered
+        const stringifiedData = JSON.stringify(filtered)
         localStorage.setItem("history", stringifiedData)
         console.log(userSearchArray)
         generateHistoryBtns()
@@ -126,9 +128,11 @@ function handleError (message) {
 
 // Generates buttons for sidebar
 function generateHistoryBtns () {
+    historyHTMLArray = []
+    console.log({userSearchArray})
     userSearchArray.forEach((item)=>{
         historyHTMLArray.push(`
-        <button id="${item.city}" class="btn btn-primary" type="button">${item.city}</button>
+        <button id="${item}" class="btn btn-primary" type="button">${item}</button>
         `)
     })
 }
@@ -141,10 +145,11 @@ function setHistory (newSearchArray) {
 // Initial Set History
 function initializeHistory () {
     const searches = JSON.parse(localStorage.getItem("history"))
+    console.log({searches})
     if (searches) {
     const historyBtns = searches?.map((item)=>{
         return `
-        <button id="${item.city}" class="btn btn-primary" type="button">${item.city}</button>
+        <button id="${item}" class="btn btn-primary" type="button">${item}</button>
         `
     })
     setHistory(historyBtns) // Cannot read properties of undefined (reading 'join')
