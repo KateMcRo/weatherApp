@@ -5,10 +5,9 @@ const cityInputEl = document.getElementById("cityInput")
 const cityHeader = document.getElementById("searchedCity")
 let cityName = ""
 
-
 let cardsHTMLArray = []
 let historyHTMLArray = []
-var userSearchArray = []
+let userSearchArray = []
 
 // funtion for user input
 function handleSubmit (event) {
@@ -136,19 +135,20 @@ function generateHistoryBtns () {
 
 // Function to set History
 function setHistory (newSearchArray) {
-    document.getElementById("sidebarContainer").innerHTML = newSearchArray.join("")
-
+    document.getElementById("sidebarContainer").innerHTML = newSearchArray?.join("") // Cannot read properties of undefined (reading 'join')
 }
 
 // Initial Set History
 function initializeHistory () {
     const searches = JSON.parse(localStorage.getItem("history"))
+    if (searches) {
     const historyBtns = searches?.map((item)=>{
         return `
         <button id="${item.city}" class="btn btn-primary" type="button">${item.city}</button>
         `
     })
-    setHistory(historyBtns)
+    setHistory(historyBtns) // Cannot read properties of undefined (reading 'join')
+    }
 }
 
 // History clicks
@@ -159,7 +159,6 @@ function handleHistoryClick (e) {
     console.log(userSelection)
     sauron()
     cityHeader.innerText = cityName
-
 }
 
 // Disallows number inputs: https://www.youtube.com/watch?v=EduFuZzvWP8
@@ -168,7 +167,7 @@ function alphaOnly(input) {
     input.value = input.value.replace(key, "")
   };
 
-initializeHistory()
+initializeHistory() // Cannot read properties of undefined (reading 'join')
 
 // Event Listeners
 searchBtnEl.addEventListener ("click", (e)=> handleSubmit(e))
