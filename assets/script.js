@@ -54,10 +54,15 @@ async function sauron() {
 async function handleWeatherData() {
     const citySearchURL = `https://api.openweathermap.org/data/2.5/forecast?q=${cityName}&appid=${apiKey}&units=imperial&`
     const response = await fetch(citySearchURL)
-    const initialCityData = await response.json()
-    const lat = initialCityData.city.coord.lat
-    const lon = initialCityData.city.coord.lon
-    return {lat, lon}
+    if (response.ok) {
+        const initialCityData = await response.json()
+        console.log({initialCityData})
+        const lat = initialCityData.city.coord.lat
+        const lon = initialCityData.city.coord.lon
+        return {lat, lon}
+    }
+    alert("Please check your search and try again")
+    throw new Error("Invalid search")
 }
 
 // second API call
